@@ -1,0 +1,59 @@
+[
+  {
+    "ContainingType": "ReponseManagement.Controllers.RequestController",
+    "Method": "RequestForm",
+    "RelativePath": "api/form/{token}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ReponseManagement.Controllers.RequestController",
+    "Method": "GetResult",
+    "RelativePath": "api/form/Demo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "ReponseManagement.Controllers.SubmitController",
+    "Method": "SubmitForm",
+    "RelativePath": "api/submit/form/{token}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "ReponseManagement.Models.DTOs.ResponseSubmissionDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
