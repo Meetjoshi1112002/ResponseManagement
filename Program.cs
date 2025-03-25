@@ -13,6 +13,7 @@ builder.Services.AddCors(options =>
             policy.AllowAnyOrigin()  // Allows requests from any origin
                   .AllowAnyMethod()  // Allows all HTTP methods (GET, POST, PUT, DELETE, etc.)
                   .AllowAnyHeader(); // Allows all headers
+                  
         });
 });
 
@@ -39,6 +40,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseJwtUser(); // Cookie oberserver
+
+app.UseCors("AllowAll"); // Enable CORS globally
 
 app.UseHttpsRedirection();
 
