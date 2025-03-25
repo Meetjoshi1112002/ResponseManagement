@@ -67,15 +67,15 @@ namespace ReponseManagement.Controllers
                 }
 
                 // Use projection to get only necessary fields for initial validation
-                var projection = Builders<SurveySchema>.Projection
-                    .Include(s=>s.IsQuiz)
-                    .Include(s => s.Config.Status)
-                    .Include(s => s.Config.AccessControl)
-                    .Include(s => s.Config.ResponseLimit);
+                //var projection = Builders<SurveySchema>.Projection
+                //    .Include(s=>s.IsQuiz)
+                //    .Include(s => s.Config.Status)
+                //    .Include(s => s.Config.AccessControl)
+                //    .Include(s => s.Config.ResponseLimit);
 
                 // Find the survey with projection
                 var filter = Builders<SurveySchema>.Filter.Eq(s => s.Id, surveyId);
-                var survey = await _surveys.Find(filter).Project<SurveySchema>(projection).FirstOrDefaultAsync();
+                var survey = await _surveys.Find(filter).FirstOrDefaultAsync();
 
                 if (survey == null)
                 {
@@ -102,7 +102,7 @@ namespace ReponseManagement.Controllers
 
                     }else{
                         return BadRequest(new ApiResponse{
-                            Message = "your time is up to submit",
+                            Message = "your are now not elligible to give the quiz",
                             Success = false
                         });
                     }
@@ -352,16 +352,17 @@ namespace ReponseManagement.Controllers
                                     s => s.Config.AttemptedUsers,
                                     a => a.UserId == userId
                                 );
-                
+
                 await _surveys.UpdateOneAsync(
                     arrayFilter,
                     Builders<SurveySchema>.Update.Set(
-                        s => s.Config.AttemptedUsers[-1].SubmittedAt,
+                        "Config.AttemptedUsers.$.SubmittedAt", // ✅ Use `$` instead of `-1`
                         DateTime.UtcNow
                     )
                 );
-                
-             
+
+
+
                 // Set rate limit cookie to prevent resubmission
                 SetRateLimitCookie(survey.Id, userId: userId);
                 
